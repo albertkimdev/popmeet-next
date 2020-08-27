@@ -9,10 +9,14 @@
     "start": "next start"
   },
   "dependencies": {
+    "babel-plugin-styled-components": "^1.11.1",
+    "firebase": "^7.19.0",
     "next": "^9.5.2",
     "postcss-preset-env": "^6.7.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "sass": "^1.26.10",
+    "styled-components": "^5.1.1",
     "tailwindcss": "^1.7.3"
   }
 }
