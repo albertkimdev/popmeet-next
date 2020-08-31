@@ -31,9 +31,11 @@ export const useAuth = () => {
 
 // Provider hook that creates auth object and handles state
 function useProvideAuth() {
-  const db = firebase.firestore();
-  db.settings({});
+  const fs = firebase.firestore();
+  fs.settings({});
   const [user, setUser] = useState(null);
+
+  const useFirestore = () => fs;
 
   // Wrap any Firebase methods we want to use making sure ...
   // ... to save the user to state.
@@ -65,7 +67,7 @@ function useProvideAuth() {
 
         // const user = await db.collect("users")
 
-        const res = await db.collection("users").doc(user.uid).set({
+        const res = await fs.collection("users").doc(user.uid).set({
           name: user.displayName,
           email: user.email,
         });
@@ -97,7 +99,7 @@ function useProvideAuth() {
         var user = result.user;
         // ...
         console.log(user);
-        const res = await db.collection("users").doc(user.uid).set({
+        const res = await fs.collection("users").doc(user.uid).set({
           name: user.displayName,
           email: user.email,
         });
@@ -179,5 +181,6 @@ function useProvideAuth() {
     confirmPasswordReset,
     fbsignin,
     googlesignin,
+    useFirestore,
   };
 }

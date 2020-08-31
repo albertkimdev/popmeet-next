@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "babel-plugin-styled-components": "^1.11.1",
+    "cloudinary": "^1.23.0",
     "firebase": "^7.19.0",
+    "formik": "^2.1.5",
     "next": "^9.5.2",
     "postcss-preset-env": "^6.7.0",
     "react": "^16.13.1",
