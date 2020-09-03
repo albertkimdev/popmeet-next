@@ -1,18 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { useAuth } from "../auth/useAuth";
+import { useUser } from "../user/useUser";
 
 const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
   const [openBurger, setOpenBurger] = useState(false);
   const [showProfileOptions, setShowProfileOptions] = useState(false);
   const auth = useAuth();
+  const user = useUser();
 
   let profileNav = "";
-  // console.log(auth.user);
-  // auth.signout();
-  if (auth.user) {
+  // console.log(user.user);
+
+  useEffect(() => {
+    if (auth.user) {
+      user.getUserData(auth.user.uid);
+    }
+  }, [auth.user]);
+
+  if (user.user) {
     profileNav = (
       <div
         className="profile-button bg-pblue  pl-4 pr-1 py-1 rounded-full text-white cursor-pointer"
@@ -20,9 +28,12 @@ const Navbar = () => {
         onMouseLeave={() => setShowProfileOptions(false)}
       >
         <div className="flex items-center justify-between ">
-          <span className="mr-4">Your name</span>
+          <span className="mr-4">{user.user.name}</span>
 
-          <img src="/img/profile_1.png" className="h-10 w-auto rounded-full" />
+          <img
+            src={user.user.profilePic || "/img/profile_1.png"}
+            className="h-10 w-auto rounded-full"
+          />
         </div>
 
         <div
@@ -89,22 +100,23 @@ const Navbar = () => {
           <span></span>
         </div>
         <div className="nav-links flex items-center">
+          <Link href="/create">
+            <a
+              className="mr-4 nav-link font-semibold"
+              onClick={() => setOpenBurger(false)}
+            >
+              Create
+            </a>
+          </Link>
           <a
-            className="mr-4 nav-link"
-            href="#"
-            onClick={() => setOpenBurger(false)}
-          >
-            Create
-          </a>
-          <a
-            className="mr-4 nav-link"
+            className="mr-4 nav-link font-semibold"
             href="#"
             onClick={() => setOpenBurger(false)}
           >
             Explore
           </a>
           <a
-            className="mr-4 nav-link"
+            className="mr-4 nav-link font-semibold"
             href="#"
             onClick={() => setOpenBurger(false)}
           >

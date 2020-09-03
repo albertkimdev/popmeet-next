@@ -8,7 +8,7 @@ const EditProfile = ({ profile, user }) => {
   const [photoFile, setPhotoFile] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
 
-  return profile ? (
+  return (
     <Formik
       initialValues={{
         name: profile.name || "",
@@ -253,8 +253,6 @@ const EditProfile = ({ profile, user }) => {
         </FormWrapper>
       )}
     </Formik>
-  ) : (
-    <p>Loading...</p>
   );
 };
 

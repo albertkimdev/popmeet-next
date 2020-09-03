@@ -7,36 +7,30 @@ import { useAuth } from "../auth/useAuth";
 import { useUser } from "../user/useUser";
 
 const Profile = () => {
-  const [edit, setEdit] = useState(true);
+  const [edit, setEdit] = useState(false);
   const [profile, setProfile] = useState(null);
   const router = useRouter();
   const auth = useAuth(); // firebase auth methods
   const user = useUser(); // firestore methods
 
   useEffect(() => {
-    let ignore = false;
     if (!auth.user) {
       // redirect if there is no user
       router.push("/");
     } else {
-      // get user data and insert into user state
-      const getUserData = async (uid) => {
-        const thisUser = await user.getUserData(uid);
-        if (!ignore) setProfile({ ...thisUser.data(), uid });
-      };
-      getUserData(auth.user.uid);
+      user.getUserData(auth.user.uid);
     }
-    return () => {
-      ignore = true;
-    };
-  }, [auth]);
+  }, []);
 
   let profileLayout = "";
+  let editProfile = "";
 
-  if (profile) {
-    profileLayout = <ViewProfile profile={profile} />;
+  if (user.user) {
+    profileLayout = <ViewProfile profile={user.user} />;
+    editProfile = <EditProfile profile={user.user} user={user} />;
   } else {
     profileLayout = <p>Loading...</p>;
+    editProfile = <p>Loading...</p>;
   }
 
   return (
@@ -51,7 +45,7 @@ const Profile = () => {
             {edit ? "View" : "Edit"}
           </button>
         </div>
-        {!edit ? profileLayout : <EditProfile profile={profile} user={user} />}
+        {!edit ? profileLayout : editProfile}
       </div>
     </ProfileWrapper>
   );

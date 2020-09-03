@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.input-label {
+  @apply text-lg text-pgray mb-4;
+}
+
+.input-text {
+  @apply border rounded-full bg-gray-200 p-2 w-1/2;
+}
+
+.date-time-button {
+  @apply border px-4 py-2 rounded-full bg-gray-200 cursor-pointer;
+}

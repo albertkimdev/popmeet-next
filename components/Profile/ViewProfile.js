@@ -1,14 +1,13 @@
 import React from "react";
 
 const ViewProfile = ({ profile }) => {
-  console.log(profile);
   return (
     <>
       <div className="user-row flex justify-between mt-4">
         <div className="user-info flex">
           <div className="profile-img">
             <img
-              src="/img/profile_2.png"
+              src={profile.profilePic || "/img/profile_1.png"}
               className="rounded-full w-56 h-56 object-cover"
               alt=""
             />

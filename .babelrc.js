@@ -9,5 +9,6 @@ module.exports = {
         preprocess: false,
       },
     ],
+    "inline-react-svg",
   ],
 };

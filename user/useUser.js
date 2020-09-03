@@ -1,5 +1,6 @@
 // Hook for using Firestore's user data
 import React, { useState, useEffect, useContext, createContext } from "react";
+import * as firebase from "firebase/app";
 import { useAuth } from "../auth/useAuth";
 
 const userContext = createContext();
@@ -17,7 +18,7 @@ function useProvideUser() {
   const [user, setUser] = useState(null);
   const auth = useAuth();
   useEffect(() => {
-    // const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+    // const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
     //   if (user) {
     //     setUser(user);
     //   } else {
@@ -31,7 +32,13 @@ function useProvideUser() {
   const getUserData = async (uid) => {
     if (!auth.user || !uid) return null;
 
-    return auth.useFirestore().collection("users").doc(uid).get();
+    const currentUser = await auth
+      .useFirestore()
+      .collection("users")
+      .doc(uid)
+      .get();
+
+    setUser({ ...currentUser.data(), uid });
   };
 
   const setUserProfile = async (uid, data) => {
@@ -41,6 +48,7 @@ function useProvideUser() {
   };
 
   return {
+    user,
     getUserData,
     setUserProfile,
   };
